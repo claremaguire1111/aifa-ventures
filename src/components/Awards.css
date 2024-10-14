@@ -1,0 +1,23 @@
+.awards-section {
+    background-color: #0f403f; /* Dark green background */
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .awards-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-family: 'Mosvita', sans-serif;
+  }
+  
+  .awards-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .awards-section ul li {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
