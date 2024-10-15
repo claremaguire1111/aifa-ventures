@@ -1,139 +1,294 @@
-/* General Styles */
-body, html {
+/* Root Styles - Global Variables */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Fonts */
+@font-face {
+  font-family: 'Mosvita';
+  src: url('/fonts/mosvita-regular-webfont.woff2') format('woff2'),
+       url('/fonts/mosvita-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Mosvita', sans-serif;
+  background-color: #000;  
+  color: #F3E3E2; /* Cream */
   margin: 0;
   padding: 0;
-  font-family: 'Mosvita', sans-serif;
-  background-color: #000000;
-  color: white;
-  overflow: hidden;
-  height: 100%;
+  overflow-x: hidden;
 }
 
 a {
-  color: #a11826;
+  color: #4B0000; /* Crimson */
   text-decoration: none;
-  font-weight: bold;
 }
 
 a:hover {
   color: #8f1010;
 }
 
-/* Header Styles */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 50px;
-  background-color: #000000;
+/* Button Styling */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1A1A1A; /* Black */
+  color: #F3E3E2; /* Cream */
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.3s;
+}
+
+button:hover {
+  border-color: #646cff;
+  background-color: #333333;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Section Styling */
+section {
+  padding: 80px 60px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: #b8975f; /* Gold color for luxury */
+}
+
+h2 {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+/* About Page Styles */
+.about-page {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7; /* Light grey for an expensive look */
+  font-family: 'Mosvita', serif;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+section {
+  padding: 100px 80px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Video Background Section */
+.about-section {
+  background-color: #000; /* Black background for video contrast */
+  position: relative;
+  padding: 100px 80px;
+}
+
+/* About Description Section */
+.about-description-section {
+  background-color: #ffffff;
+  padding: 100px 80px;
+}
+
+.about-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px !important; /* Adjust padding for more space */
-  z-index: 200 !important;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  gap: 40px;
 }
 
-header h1 {
-  color: #ffffff !important;
-  font-size: 20px !important;
-  font-family: 'Mosvita', sans-serif;
+.about-section .text-content {
+  max-width: 50%;
+  font-size: 1.3rem;
+  color: #333; /* Darker text for better readability */
 }
 
-header nav {
-  display: flex !important;
-  justify-content: flex-end !important;
-  gap: 15px !important;
+.about-section img {
+  max-width: 45%;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
 }
 
-header nav a {
-  color: #ffffff !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  text-decoration: none !important;
+.about-section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
-header nav a:hover {
-  color: #a11826 !important;
+/* Awards Section */
+.awards-section {
+  display: flex;
+  flex-direction: column;
+  background-image: url('/images/pexels-cottonbro-4722577.jpg');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: #ffffff;
+  min-height: 100vh;
 }
 
-/* Footer Styles */
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 50px !important;
-  background-color: #000000 !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  padding: 0 10px !important;
-  z-index: 200 !important;
-  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.5) !important;
-  color: white !important;
+.awards-section .text-content {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
 }
 
-footer p {
-  margin: 0 !important;
-  font-size: 12px !important;
-  color: #204030 !important;
+.awards-section .image-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-footer nav {
-  display: flex !important;
-  gap: 5px !important;  /* Reduced gap for better fit */
+.awards-section img {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
-footer nav a {
-  color: #ffffff !important;
-  font-size: 12px !important;
-  margin-left: 5px !important;
-  text-decoration: none !important;
+/* Sign Up Section */
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  text-align: center;
 }
 
-footer nav a img {
-  width: 10px !important;  /* Smaller size for social media icons */
-  height: 10px !important;
-  vertical-align: middle !important;
-  margin-left: 5px !important;
+.signup-section form {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background: #fff;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-footer nav a:hover {
-  color: #a11826 !important;
+.signup-section input,
+.signup-section button {
+  width: 400px;
+  padding: 10px;
+  font-size: 1rem;
 }
 
-/* Responsive Design for smaller screens */
+.signup-section button {
+  background-color: #b8975f; /* Gold color for luxury */
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.signup-section button:hover {
+  background-color: #a7844c;
+}
+
+/* Contact Section */
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('/images/aifa_background_2.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 80px 60px;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  background: #fff;
+  border-radius: 15px;
+}
+
+.contact-section input,
+.contact-section textarea,
+.contact-section button {
+  width: 400px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.contact-section textarea {
+  height: 150px;
+}
+
+.contact-section button {
+  background-color: #b8975f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.contact-section button:hover {
+  background-color: #a7844c;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  section {
+    padding: 40px;
+  }
+
+  .about-section img,
+  .awards-section img {
+    max-width: 100%;
+  }
+
+  .signup-section input,
+  .signup-section button,
+  .contact-section input,
+  .contact-section textarea,
+  .contact-section button {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
-  header, footer {
-    padding: 0 10px !important;
-    height: 40px !important;
+  .about-section {
+    flex-direction: column;
+    text-align: center;
   }
 
-  header h1, footer p {
-    font-size: 16px !important;
+  .about-section img {
+    margin-top: 20px;
   }
 
-  header nav a, footer nav a {
-    font-size: 12px !important;
+  .image-gallery {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  footer nav a img {
-    width: 8px !important;  /* Smaller icons for smaller screens */
-    height: 8px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  header h1, footer p {
-    font-size: 14px !important;
-  }
-
-  header nav a, footer nav a {
-    font-size: 11px !important;
-  }
-
-  footer nav a img {
-    width: 8px !important;
-    height: 8px !important;
+  h1 {
+    font-size: 2rem;
   }
 }

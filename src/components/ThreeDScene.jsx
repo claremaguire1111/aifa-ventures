@@ -14,7 +14,7 @@ const ThreeDScene = () => {
   return (
     <Canvas
       camera={{ position: [-9.662, 1.661, -1.543], fov: 50 }} // Initial camera position
-      style={{ width: '100vw', height: '100vh' }}
+      style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}
       onCreated={({ camera }) => {
         camera.lookAt(0, 0, 0); // Ensure the camera looks at the center of the scene
         logCameraPosition(camera); // Log the initial camera position
