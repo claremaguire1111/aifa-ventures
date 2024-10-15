@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Text } from '@react-three/drei';
@@ -10,13 +11,47 @@ import 'react-multi-carousel/lib/styles.css';
 
 const Home = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [cursorColor, setCursorColor] = useState('#ffffff');
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setCursorPosition({ x: event.clientX, y: event.clientY });
+    };
+
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('section');
+      let newCursorColor = '#ffffff';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          const backgroundColor = window.getComputedStyle(section).backgroundColor;
+          if (backgroundColor === 'rgb(255, 255, 255)') {
+            newCursorColor = '#000000';
+          }
+        }
+      });
+
+      setCursorColor(newCursorColor);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 1, ease: 'easeOut' } },
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prevMenuOpen) => !prevMenuOpen);
   };
 
   const ThreeDScene = () => {
@@ -24,7 +59,16 @@ const Home = () => {
     return (
       <Canvas
         camera={{ position: [-9.662, 1.661, -1.543], fov: 50 }}
-        style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, zIndex: 2 }}
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 2,
+          backgroundImage: `url('/images/aifa_background_2.jpg')`,
+          backgroundSize: 'cover',
+        }}
         onCreated={({ camera }) => {
           camera.lookAt(0, 0, 0);
         }}
@@ -49,9 +93,17 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      {/* Header Section */}
+      <div
+        className="custom-cursor"
+        style={{
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
+          backgroundColor: cursorColor,
+        }}
+      ></div>
+
       <header className="header">
-        <div className="logo">AIFA Ventures</div>
+        <Link to="/" className="logo">AIFA Ventures</Link>
         <div className={`hamburger ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
           <div className="line"></div>
           <div className="line"></div>
@@ -67,7 +119,6 @@ const Home = () => {
         </nav>
       </header>
 
-      {/* Section 1: About AIFA Ventures */}
       <motion.section
         className="about-section"
         id="about"
@@ -94,64 +145,54 @@ const Home = () => {
         </div>
       </motion.section>
 
-      {/* Section 2: About AIFA Ventures Description */}
       <motion.section
         className="about-description-section"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={sectionVariants}
-        style={{ backgroundColor: '#ffffff', padding: '100px 80px' }}
       >
         <div className="text-content">
-          {/* Header with updated style */}
           <h2 className="section-header">A positive future for online entertainment</h2>
           <p>
             At AIFA Ventures, we are dedicated to building a positive future for culture and technology. We believe in
-            the transformative power of the arts and entertainment, and we are passionate about supporting the creators,
+            the transformative power of the arts, technology, and entertainment, and we are passionate about supporting the creators,
             innovators, and visionaries who shape our world. By nurturing pioneering projects and groundbreaking talent,
             we aim to empower the next generation of cultural and technological leaders.
           </p>
         </div>
       </motion.section>
 
-{/* Section 3: Awards */}
-<motion.section
-  className="awards-section"
-  id="awards"
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.3 }}
-  variants={sectionVariants}
->
-  <div className="awards-content">
-    <h1 className="awards-heading">Awards</h1>
-    <p className="awards-subtext">
-      We empower creators, entrepreneurs, and the future of creativity and technology through our annual awards. Our first awards were held in Lisbon in 2024, celebrating outstanding achievements in arts and technology.
-    </p>
+      <motion.section
+        className="awards-section"
+        id="awards"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <div className="awards-content">
+          <h1 className="awards-heading">Awards</h1>
+          <p className="awards-subtext">
+            We empower creators, entrepreneurs, and the future of creativity and technology through our annual awards. Our first awards were held in Lisbon in 2024, celebrating outstanding achievements in arts and technology.
+          </p>
+          <div className="awards-grid">
+            <div className="award-item">
+              <img src="/images/aifa_image_3.JPG" alt="Award Ceremony" className="award-image" />
+            </div>
+            <div className="award-item">
+              <img src="/images/aifa-web-13.jpg" alt="Award Winner" className="award-image" />
+            </div>
+            <div className="award-item">
+              <img src="/images/aifa-web-14.jpg" alt="Award 3" className="award-image" />
+            </div>
+            <div className="award-item">
+              <img src="/images/aifa_image_4.JPG" alt="Award 4" className="award-image" />
+            </div>
+          </div>
+        </div>
+      </motion.section>
 
-    {/* Awards Image Grid */}
-    <div className="awards-grid">
-      <div className="award-item">
-        <img src="/images/aifa_image_3.JPG" alt="Award Ceremony" className="award-image" />
-      </div>
-      <div className="award-item">
-        <img src="/images/aifa_image_1.JPG" alt="Award Winner" className="award-image" />
-      </div>
-      <div className="award-item">
-        <img src="/images/aifa_image_2.JPG" alt="Award 3" className="award-image" />
-      </div>
-      <div className="award-item">
-        <img src="/images/aifa_image_4.JPG" alt="Award 4" className="award-image" />
-      </div>
-    </div>
-  </div>
-</motion.section>
-
-
-
-
-      {/* Section 4: Recent Partnerships and Events */}
       <motion.section
         className="partnerships-section"
         id="partnerships"
@@ -159,29 +200,36 @@ const Home = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={sectionVariants}
-        style={{ backgroundColor: '#000', color: '#fff', padding: '100px 80px' }}
       >
-        <h1>Recent Partnerships and Events</h1>
-        <div className="partnership">
-          <h2>Sotheby's Institute</h2>
-          <p>We partnered with Sotheby's to provide insights on the intersection of art and technology, fostering new opportunities for creators and innovators in the cultural space.</p>
-          <img src="/images/aifa-web-12.png" alt="Sotheby's Institute Partnership" />
-        </div>
-
-        <div className="partnership">
-          <h2>ASVOFF Fashion and Film Festival</h2>
-          <p>Fashion icon Diane Pernet announced Michèle Lamy as an honoree, celebrating her contributions to the world of fashion and creativity at the ASVOFF Festival.</p>
-          <img src="/images/aifa-web-12.png" alt="ASVOFF Festival" />
-        </div>
-
-        <div className="partnership">
-          <h2>Buckingham Palace</h2>
-          <p>AIFA Co-Founder Leo Crane represented us at Buckingham Palace's Royal Garden Party, celebrating the contributions of leaders in the UK creative industries.</p>
-          <img src="/images/aifa-web-12.png" alt="Buckingham Palace Event" />
+        <div className="partnerships-content">
+          <div className="text-content">
+            <h1>Partnerships and Events</h1>
+            <p>
+              Our partnerships and events drive cultural innovation and support the
+              arts. We have worked with renowned institutions and participated in
+              significant industry events.
+            </p>
+            <p>
+              From collaborating with Sotheby's Institute to being a part of the ASVOFF
+              Fashion and Film Festival, we continue to support creativity and
+              technology at the highest levels.
+            </p>
+          </div>
+          <div className="video-box">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="partnership-video"
+            >
+              <source src="/videos/video-1-aifa.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </motion.section>
 
-      {/* Section 5: Services */}
       <motion.section
         className="services-section"
         id="services"
@@ -189,34 +237,54 @@ const Home = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={sectionVariants}
-        style={{ backgroundColor: '#fff', color: '#000', padding: '100px 80px' }}
       >
-        <h1>Services</h1>
+        <h1 className="services-heading">Services</h1>
         <div className="services-grid">
-          <div className="service-item">
+          <div className="service-box">
             <h2>Brand Strategy</h2>
-            <p>Advising at the intersection of entertainment and technology, we help you and your company scale with the latest trends and innovations.</p>
+            <p>
+              Advising at the intersection of entertainment and technology, we help
+              you and your company scale with the latest trends and innovations.
+            </p>
           </div>
-          <div className="service-item">
+          <div className="service-box">
             <h2>Creative Strategy</h2>
-            <p>Consulting and advisory in the worlds of arts, fashion, music, tech, and entertainment.</p>
+            <p>
+              Consulting and advisory in the worlds of arts, fashion, music, tech, and
+              entertainment.
+            </p>
           </div>
-          <div className="service-item">
+          <div className="service-box">
             <h2>Event Activations</h2>
-            <p>Creating unique events at the heart of technology and culture.</p>
+            <p>
+              Creating unique events at the heart of technology and culture.
+            </p>
           </div>
-          <div className="service-item">
+          <div className="service-box">
             <h2>Advisors</h2>
-            <p>Advising startups and brands on the latest technology and trends in consumer markets.</p>
+            <p>
+              Advising startups and brands on the latest technology and trends in
+              consumer markets.
+            </p>
           </div>
-          <div className="service-item">
+          <div className="service-box">
             <h2>Creative Consulting</h2>
-            <p>Producing and directing with the future in mind, elevating your goals with a fresh perspective on culture and creativity via our bespoke consultancy.</p>
+            <p>
+              Producing and directing with the future in mind, elevating your goals
+              with a fresh perspective on culture and creativity via our bespoke
+              consultancy.
+            </p>
+          </div>
+          <div className="service-box">
+            <h2>Digital Transformation</h2>
+            <p>
+              Leading digital transformation initiatives to help companies embrace
+              cutting-edge technology, innovation, and improve operational efficiency.
+            </p>
           </div>
         </div>
       </motion.section>
 
-      {/* Section 6: Brands Carousel */}
       <motion.section
         className="brands-section"
         id="brands"
@@ -224,38 +292,56 @@ const Home = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={sectionVariants}
-        style={{ backgroundColor: '#000', color: '#fff', padding: '50px 80px' }}
       >
-        <h1>Brands We've Worked With</h1>
-        <Carousel
-          additionalTransfrom={0}
-          arrows
-          autoPlay
-          autoPlaySpeed={3000}
-          infinite
-          keyBoardControl
-          responsive={{
-            desktop: {
-              breakpoint: { max: 3000, min: 1024 },
-              items: 3,
-            },
-            tablet: {
-              breakpoint: { max: 1024, min: 464 },
-              items: 2,
-            },
-            mobile: {
-              breakpoint: { max: 464, min: 0 },
-              items: 1,
-            },
-          }}
-        >
-          <img src="/images/brand1.png" alt="Brand 1" />
-          <img src="/images/brand2.png" alt="Brand 2" />
-          <img src="/images/brand3.png" alt="Brand 3" />
-        </Carousel>
+        <div className="moving-brands">
+          <div className="brand-row first-row">
+            <img src="/images/brand1.png" alt="Brand 1" />
+            <img src="/images/brand2.png" alt="Brand 2" />
+            <img src="/images/brand3.png" alt="Brand 3" />
+            <img src="/images/brand4.png" alt="Brand 4" />
+          </div>
+          <div className="brand-row second-row">
+            <img src="/images/brand5.png" alt="Brand 5" />
+            <img src="/images/brand6.png" alt="Brand 6" />
+            <img src="/images/brand7.png" alt="Brand 7" />
+            <img src="/images/brand8.png" alt="Brand 8" />
+          </div>
+        </div>
       </motion.section>
 
-      {/* Section 7: Sign Up with 3D Scene */}
+      <motion.section
+        className="contact-us-section"
+        id="contact"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={sectionVariants}
+      >
+        <div className="footer-column">
+          <h3>Get in Touch</h3>
+          <ul>
+            <li><a href="mailto:aifa@aifilm.academy">aifa@aifilm.academy</a></li>
+          </ul>
+        </div>
+        <div className="footer-column">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#partnerships">Partnerships</a></li>
+          </ul>
+        </div>
+        <div className="footer-column">
+          <h3>Social</h3>
+          <ul>
+            <li><a href="https://instagram.com">Instagram</a></li>
+            <li><a href="https://twitter.com">X (Twitter)</a></li>
+            <li><a href="https://linkedin.com">LinkedIn</a></li>
+          </ul>
+        </div>
+      </motion.section>
+
       <motion.section
         className="signup-section"
         id="signup"
@@ -263,55 +349,24 @@ const Home = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={sectionVariants}
-        style={{ position: 'relative', padding: '100px 80px', overflow: 'hidden' }}
       >
-        <div className="text-content">
+        <div className="three-d-container">
+          <ThreeDScene />
+        </div>
+        <div className="signup-box">
           <h1>Sign Up</h1>
-          <p>We are on a mission to support the arts, including through our weekly newsletter that shares creator grants, work, and opportunities. Stay informed and inspired by signing up to receive the latest updates and resources directly to your inbox.</p>
+          <p>Welcome to our virtual office! Stay informed and inspired by signing up to receive the latest updates and resources directly to your inbox. Including creator grants, job offerings, interviews and more.</p>
           <form action="https://formspree.io/f/mnnqqvqd" method="POST">
             <input type="text" name="name" placeholder="Your Name" required />
             <input type="email" name="email" placeholder="Your Email" required />
             <button type="submit">Sign Up</button>
           </form>
         </div>
-        <div className="three-d-container" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, zIndex: -1 }}>
-          <ThreeDScene />
-        </div>
       </motion.section>
 
-      {/* Section 8: Combined Contact Us and Footer */}
-      <motion.section
-        className="contact-footer-section"
-        id="contact"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={sectionVariants}
-        style={{ backgroundColor: '#000', color: '#fff', padding: '50px', borderRadius: '20px', border: '5px solid var(--black)', margin: '40px auto', width: '80%' }}
-      >
-        <div className="text-content">
-          <h1>Contact Us</h1>
-          <p>For further inquiries, please reach out using the form below or through our social channels.</p>
-          <form action="https://formspree.io/f/mdkoozod" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required />
-            <input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-          </form>
-          <nav>
-            <a href="https://www.linkedin.com/company/aifa-ventures/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <FontAwesomeIcon icon={faLinkedin} size="1x" />
-            </a>
-            <a href="https://x.com/aifilmacademy" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <FontAwesomeIcon icon={faTwitter} size="1x" />
-            </a>
-            <a href="https://www.instagram.com/aifilm.academy/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <FontAwesomeIcon icon={faInstagram} size="1x" />
-            </a>
-          </nav>
-          <p>© AIFA Ventures 2024</p>
-        </div>
-      </motion.section>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <p>© AIFA Ventures 2024</p>
+      </div>
     </div>
   );
 };

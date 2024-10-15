@@ -4,6 +4,24 @@
   --red: #e50914;
 }
 
+/* Hide the default cursor across the entire page */
+* {
+  cursor: none; /* Hide the default cursor */
+}
+
+/* Custom Cursor Styling */
+.custom-cursor {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  mix-blend-mode: difference; /* Helps to make it visible against all colors */
+  transition: background-color 0.2s ease; /* Smooth color transition */
+}
+
+/* Reset body styles */
 body {
   font-family: 'Cormorant Garamond', serif;
   background-color: var(--black);
@@ -13,6 +31,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Header Styling */
 .header {
   background-color: var(--black);
   width: 100%;
@@ -20,106 +39,169 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
+  z-index: 1500;
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
 }
 
 .logo {
   font-size: 2rem;
   color: var(--white);
+  text-decoration: none;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .hamburger .line {
+  width: 25px;
+  height: 3px;
   background-color: var(--white);
+  margin: 4px 0;
+  transition: 0.4s;
 }
 
+/* Navigation Menu Styling */
 .nav-menu {
   display: flex;
   gap: 20px;
+  z-index: 1499; /* Below the header but above other content */
 }
 
 .nav-menu a {
   color: var(--white);
   transition: color 0.3s ease-in-out;
+  text-decoration: none;
 }
 
 .nav-menu a:hover {
   color: var(--red);
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  /* Show hamburger and hide nav-menu on smaller screens */
+  .hamburger {
+    display: flex; /* Show hamburger on mobile */
+  }
+
+  .nav-menu {
+    display: none; /* Hide the nav links by default on mobile */
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background-color: var(--black);
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 999;
+  }
+
+  /* When the menu is open */
+  .nav-menu.open {
+    display: flex !important; /* Show the nav links when open */
+  }
+}
+
 /* Fullscreen Video Background Section */
 .about-section {
   position: relative;
-  height: 100vh !important; /* Ensure height is 100vh */
+  height: 100vh;
   background-color: var(--black);
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 /* Black Frame with Curved Corners */
 .video-wrapper {
   position: relative;
-  width: 100% !important; /* Adjusted width */
-  height: 90% !important; /* Adjusted height */
-  border: 5px solid var(--black) !important; /* Thinner black border */
-  border-radius: 20px !important; /* Curved corners */
-  overflow: hidden !important; /* Ensure video stays within the border */
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important; /* Optional shadow for sleek look */
-  display: flex !important; /* Ensures video stays centered */
-  justify-content: center !important;
-  align-items: center !important;
+  width: 100%;
+  height: 100%;
+  border: 5px solid var(--black);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Video inside the frame */
 .background-video {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-/* Overlay for Text in Front of the Video */
 .overlay {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  z-index: 2 !important;
-  text-align: center !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  width: 90%; /* Ensure it is contained within the viewport */
 }
 
 .hero-text {
-  font-size: 6rem !important;
-  font-weight: bold !important;
-  text-transform: uppercase !important;
-  color: var(--white) !important;
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--white);
 }
 
 .hero-subtext {
-  font-size: 2rem !important;
-  color: var(--white) !important;
-  margin-top: 20px !important;
+  font-size: 1.5rem;
+  color: var(--white);
+  margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+  .hero-text {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+  }
+
+  .video-wrapper {
+    height: 50vh;
+  }
+}
+
+/* About Description Section */
 .about-description-section {
-  background-color: var(--white) !important;
-  color: var(--black) !important;
-  padding: 80px 60px !important;
+  background-color: var(--white);
+  color: var(--black);
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 /* Section 2 Header Style */
 .section-header {
-  font-size: 1.8rem; /* Slightly larger font size than the paragraph */
-  font-style: italic !important; /* Force Italic font with !important */
-  color: #000000; /* Black text color */
-  text-align: center; /* Center the header */
-  margin-bottom: 20px; /* Space below the header */
+  font-size: 1.8rem;
+  font-style: italic;
+  color: #000000;
+  margin-bottom: 20px;
 }
 
+/* Add similar responsive changes for the remaining sections as needed... */
 .awards-section {
   background-color: var(--black);
   color: var(--white);
@@ -144,10 +226,9 @@ body {
   color: #f0f0f0;
 }
 
-/* Updated Grid to display images in a line of 4 */
 .awards-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   justify-content: center;
   margin-top: 40px;
@@ -157,9 +238,9 @@ body {
   position: relative;
   overflow: hidden;
   border: 2px solid var(--white);
-  border-radius: 0 0 50px 0; /* Curved bottom-right corner */
+  border-radius: 0 0 50px 0;
   transition: transform 0.3s ease-in-out;
-  height: 300px; /* Ensures the boxes are taller */
+  height: 300px;
 }
 
 .award-item:hover {
@@ -169,87 +250,628 @@ body {
 .award-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures images fill the boxes */
-  border-radius: inherit; /* Ensures curved corners are respected */
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.image-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 0 30px 0;
+  transition: transform 0.3s ease-in-out;
+  max-height: 300px;
 }
 
 /* Responsive for smaller screens */
 @media (max-width: 1024px) {
   .awards-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablet-sized screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .awards-grid {
-    grid-template-columns: 1fr; /* 1 column for mobile-sized screens */
+    grid-template-columns: 1fr;
   }
 }
 
+/* Partnerships Section Styling */
+.partnerships-section {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 100px 80px;
+}
+
+.partnerships-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.text-content {
+  width: 50%;
+}
+
+.text-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.text-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Video Box with Border and Rounded Corners */
+.video-box {
+  width: 45%;
+  height: 400px;
+  position: relative;
+  border: 5px solid var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.partnership-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 1024px) {
+  .partnerships-content {
+    flex-direction: column;
+  }
+
+  .text-content, .video-box {
+    width: 100%;
+  }
+
+  .video-box {
+    margin-top: 20px;
+  }
+}
+
+.services-section {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 100px 80px;
+}
+
+.services-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  justify-content: center;
+}
+
+.service-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.service-box:hover {
+  transform: translateY(-10px);
+}
+
+.service-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.service-box p {
+  font-size: 1rem;
+  color: #333333;
+}
+
+/* Responsive layout for tablets */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Brands Section */
+.brands-section {
+  background-color: #000;
+  padding: 50px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.moving-brands {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Row for moving logos */
+.brand-row {
+  display: flex;
+  gap: 30px;
+  white-space: nowrap;
+  animation: moveLeft 20s linear infinite;
+}
+
+.brand-row img {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Reverse the direction for the second row */
+.second-row {
+  animation: moveRight 20s linear infinite;
+}
+
+/* Animation for moving left */
+@keyframes moveLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Animation for moving right */
+@keyframes moveRight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
 
 /* Contact Section */
-.contact-section {
-  background-color: var(--red) !important;
-  color: var(--white) !important;
-  padding: 100px 80px !important;
-  text-align: center !important;
+.contact-us-section {
+  background-color: var(--black); /* Black background */
+  color: var(--white); /* White text for contrast */
+  padding: 50px 40px; /* Adjusted padding for consistent spacing */
+  border-radius: 20px;
+  border: 5px solid var(--white);
+  max-width: 900px; /* Reduced width to add more space on the sides */
+  margin: 40px auto; /* Center horizontally with extra space at the top and bottom */
+  text-align: left;
+  display: flex;
+  justify-content: space-between; /* Space out columns */
+  align-items: flex-start; /* Align columns at the top */
+  gap: 20px;
+  flex-wrap: nowrap;
+  box-sizing: border-box; /* Include padding and border in the width calculation */
 }
 
-.contact-section form {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 20px !important;
+/* Individual Columns Styling */
+.contact-column {
+  flex: 1; /* Each column takes equal space */
+  min-width: 200px;
 }
 
-.contact-section input,
-.contact-section textarea,
-.contact-section button {
-  width: 100% !important;
-  max-width: 400px !important;
-  padding: 10px !important;
-  font-size: 1rem !important;
-  border: none !important;
-  border-radius: 5px !important;
+.contact-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-.contact-section button {
-  background-color: var(--black) !important;
-  color: var(--white) !important;
-  cursor: pointer !important;
-  transition: background-color 0.3s ease-in-out !important;
+.contact-column ul {
+  list-style: none;
+  padding: 0;
 }
 
-.contact-section button:hover {
-  background-color: var(--white) !important;
-  color: var(--black) !important;
+.contact-column ul li {
+  margin-bottom: 10px;
+}
+
+.contact-column a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.contact-column a:hover {
+  color: var(--red);
+}
+
+.contact-subscribe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-subscribe input {
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-bottom: 2px solid var(--white);
+  background-color: transparent;
+  color: var(--white);
+  width: 100%;
+}
+
+.contact-subscribe button {
+  background-color: var(--red);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.contact-subscribe button:hover {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .contact-us-section {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; /* Reduced padding for smaller screens */
+  }
+
+  .contact-column {
+    margin-bottom: 20px;
+  }
 }
 
 /* Footer Section */
 .footer {
-  background-color: var(--black) !important;
-  color: var(--white) !important;
-  padding: 20px !important;
-  text-align: center !important;
-}
-
-.footer nav a {
-  color: var(--white) !important;
-  margin: 0 10px !important;
-  transition: color 0.3s ease-in-out !important;
-}
-
-.footer nav a:hover {
-  color: var(--red) !important;
-}
-
-/* Contact Footer Section */
-.contact-footer-section {
   background-color: var(--black);
   color: var(--white);
-  padding: 50px;
+  padding: 40px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: none; /* Remove border if present */
   border-radius: 20px;
-  border: 5px solid var(--black);
   margin: 40px auto;
   width: 80%;
+  position: relative;
+  z-index: 1;
+  box-shadow: none; /* Remove any box-shadow */
 }
+
+.footer-column {
+  flex: 1;
+  margin-right: 20px;
+  min-width: 200px;
+}
+
+.footer-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-column a:hover {
+  color: var(--red);
+}
+
+.footer-subscribe {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-subscribe input {
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-bottom: 2px solid var(--white);
+  background-color: transparent;
+  color: var(--white);
+  width: 100%;
+}
+
+.footer-subscribe button {
+  background-color: var(--red);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.footer-subscribe button:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+/* Copyright Section */
+.copyright {
+  text-align: center;
+  padding: 20px 0;
+  background-color: var(--black); /* Ensure it matches the footer */
+  color: var(--white);
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  border-top: none; /* Remove border-top */
+}
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-column {
+    margin-bottom: 20px;
+  }
+}
+
+/* Ensure 3D Scene takes the full background */
+.three-d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Floating Sign-Up Box */
+.signup-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form Styling */
+.signup-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.signup-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+  background-color: #333;
+  color: white;
+  text-align: left;
+}
+
+.signup-box button {
+  padding: 12px;
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.signup-box button:hover {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+/* Updated Signup Section CSS */
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 100px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.three-d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-image: url('/images/aifa_background_2.jpg'); /* Add the background image */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Floating Sign-Up Box */
+.signup-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Updated Signup Section CSS */
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 100px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.three-d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-image: url('/images/aifa_background_2.jpg'); /* Add the background image */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Floating Sign-Up Box */
+.signup-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Updated Signup Section CSS */
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 100px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.three-d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-image: url('/images/aifa_background_2.jpg'); /* Add the background image */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Floating Sign-Up Box */
+.signup-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Updated Signup Section CSS */
+.signup-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 100px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.three-d-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-image: url('/images/aifa_background_2.jpg'); /* Add the background image */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Floating Sign-Up Box */
+.signup-box {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
