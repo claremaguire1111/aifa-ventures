@@ -7,6 +7,8 @@ import './Home.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
+
+
 const Home = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -198,6 +200,7 @@ const Home = () => {
         <div className="overlay">
           <h1 className="hero-text">AIFA</h1>
           <h2 className="hero-subtext">Shaping today for a brighter tomorrow</h2>
+          <Link to="/ai" className="hero-button">Want to learn a filmmaker? Test our AI now</Link>
         </div>
       </motion.section>
 
